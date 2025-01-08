@@ -1,12 +1,13 @@
 import React from 'react'
 import { getAllTasks } from '../lib/data/task.data';
+import { Itask } from '../typescript.type/interface';
 
 const TasksList = async () => {
-    const data: any = await getAllTasks(); //check
+    const data: Itask[] = await getAllTasks() || [];
 
     return (
         <div>
-            {data.map((task: any, i: number) => ( //check
+            {data.map((task, i: number) => (
                 <div key={i} className="onetask">
                     <section
                         className={`onetask__section ${task.done ? 'donecss' : 'nonecsss'}`}
