@@ -1,6 +1,7 @@
 import React from 'react'
 import { getAllTasks } from '../lib/data/task.data';
 import { Itask } from '../typescript.type/interface';
+import Link from 'next/link';
 
 const TasksList = async () => {
     const data: Itask[] = await getAllTasks() || [];
@@ -18,7 +19,7 @@ const TasksList = async () => {
                         <p>{task.adress}</p>
                         {/* <EditCheckBox done={task.done} id={task._id.toString()} /> */}
                     </section>
-                    {/* <Link href={`/edit-task/${task._id}`}>Edit Task</Link> */}
+                    <Link href={`/edit-task/${task._id}`}>Edit task</Link>
                 </div>
             ))}
         </div>

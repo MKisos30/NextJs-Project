@@ -7,7 +7,7 @@ import { taskValidation } from "../validation/task.valid"
 import { redirect } from "next/navigation";
 import { State } from "@/app/typescript.type/interface";
 
-export const createNewTask = async (prevState: State, formData: FormData) => { //check
+export const createNewTask = async (prevState: State, formData: FormData) => {
     const taskValid = taskValidation.safeParse({
         title: formData.get('title'),
         description: formData.get('description'),
@@ -24,7 +24,7 @@ export const createNewTask = async (prevState: State, formData: FormData) => { /
 
     const { title, description, ddLine, adress } = taskValid.data;
 
-    try { // check
+    try { 
         await connectToDatabase();
         await Task.create({ title, description, ddLine, adress })
 
@@ -34,6 +34,45 @@ export const createNewTask = async (prevState: State, formData: FormData) => { /
             message: 'שגיאה, המשימה לא נוצרה',
         }
     }
+
     revalidatePath('/') // update cache of the page that you want to update 
-    redirect('/') //redirect to the page that you want //check
+    redirect('/') //redirect to the page that you want 
+}
+
+export const editTask = async (prevState: State, formData: FormData) => {
+    const taskValid = taskValidation.safeParse({
+        title: formData.get('title'),
+        description: formData.get('description'),
+        ddLine: formData.get('ddLine'),
+        adress: formData.get('adress'), 
+    })
+
+    if (!taskValid.success) {
+        return {
+            errors: taskValid.error.flatten().fieldErrors,
+            message: "שגיאה, המשימה לא נערכה",
+        }
+    }
+
+    const { title, description, ddLine, adress } = taskValid.data;
+
+    try {
+        await connectToDatabase();
+        await Task.findByIdAndUpdate(formData.get('_id'), { title, description, ddLine, adress });
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getOneTask = async (id: string) => {
+    try {
+        await connectToDatabase();
+        const oneTask = await Task.findById(id);
+
+        return oneTask;
+        
+    } catch (error) {
+        console.log(error)
+    }
 }

@@ -6,18 +6,58 @@ import { State } from '@/app/typescript.type/interface';
 
 const Page = () => {
     const initialState: State = { message: null, errors: {} };
-    const [state, formAction] = useActionState(createNewTask, initialState); // check - state was not right
+    const [state, formAction] = useActionState(createNewTask, initialState);
 
-    console.log(state)
     return (
         <div>
             <h1>Add New Task</h1>
             <div>{state.message}</div>
             <form action={formAction}>
-                <input type="text" name="title" placeholder='כותרת למשימה' />
-                <input type="text" name="description" placeholder='תיאור למשימה' />
-                <input type="date" name="ddLine" />
-                <input type="text" name="adress" placeholder='כתובת למשימה' />
+                <div>
+
+                    <div>
+                        {state.errors?.title &&
+                            state.errors.title.map((error: string) => (
+                                <p className="mt-2 text-sm text-red-500" key={error}>
+                                    {error}
+                                </p>
+                            ))}
+                    </div>
+                    <input type="text" name="title" placeholder='כותרת למשימה' />
+                </div>
+                <div>
+                    <div>
+                        {state.errors?.description &&
+                            state.errors.description.map((error: string) => (
+                                <p className="mt-2 text-sm text-red-500" key={error}>
+                                    {error}
+                                </p>
+                            ))}
+                    </div>
+                    <input type="text" name="description" placeholder='תיאור למשימה' />
+                </div>
+                <div>
+                    <div>
+                        {state.errors?.ddLine &&
+                            state.errors.ddLine.map((error: string) => (
+                                <p className="mt-2 text-sm text-red-500" key={error}>
+                                    {error}
+                                </p>
+                            ))}
+                    </div>
+                    <input type="date" name="ddLine" />
+                </div>
+                <div>
+                    <div>
+                        {state.errors?.adress &&
+                            state.errors.adress.map((error: string) => (
+                                <p className="mt-2 text-sm text-red-500" key={error}>
+                                    {error}
+                                </p>
+                            ))}
+                    </div>
+                    <input type="text" name="adress" placeholder='כתובת למשימה' />
+                </div>
                 <button type="submit">הוסף משימה</button>
             </form>
         </div>
