@@ -33,3 +33,7 @@ export interface Itask {
 export interface IPageEdit {
   params: { taskId: string }
 }
+
+export interface ITaskEditInputs { 
+  task: Itask
+ }

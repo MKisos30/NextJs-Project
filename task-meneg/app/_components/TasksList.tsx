@@ -15,7 +15,7 @@ const TasksList = async () => {
                     >
                         <h2>{task.title}</h2>
                         <p>{task.description}</p>
-                        {/* <p>{task.ddLine.toLocaleDateString()}</p> */}
+                        <p>{task.ddLine.toLocaleDateString()}</p>
                         <p>{task.adress}</p>
                         {/* <EditCheckBox done={task.done} id={task._id.toString()} /> */}
                     </section>

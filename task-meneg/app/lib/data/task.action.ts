@@ -24,7 +24,7 @@ export const createNewTask = async (prevState: State, formData: FormData) => {
 
     const { title, description, ddLine, adress } = taskValid.data;
 
-    try { 
+    try {
         await connectToDatabase();
         await Task.create({ title, description, ddLine, adress })
 
@@ -44,7 +44,7 @@ export const editTask = async (prevState: State, formData: FormData) => {
         title: formData.get('title'),
         description: formData.get('description'),
         ddLine: formData.get('ddLine'),
-        adress: formData.get('adress'), 
+        adress: formData.get('adress'),
     })
 
     if (!taskValid.success) {
@@ -59,10 +59,13 @@ export const editTask = async (prevState: State, formData: FormData) => {
     try {
         await connectToDatabase();
         await Task.findByIdAndUpdate(formData.get('_id'), { title, description, ddLine, adress });
-        
+
     } catch (error) {
         console.log(error)
     }
+
+    revalidatePath('/') // update cache of the page that you want to update 
+    redirect('/') //redirect to the page that you want 
 }
 
 export const getOneTask = async (id: string) => {
@@ -71,7 +74,7 @@ export const getOneTask = async (id: string) => {
         const oneTask = await Task.findById(id);
 
         return oneTask;
-        
+
     } catch (error) {
         console.log(error)
     }

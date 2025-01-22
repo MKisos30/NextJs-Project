@@ -1,16 +1,17 @@
-import { getOneTask } from '@/app/lib/data/task.action';
-import { IPageEdit, Itask } from '@/app/typescript.type/interface'
-import React from 'react'
+"use server";
 
-const Page = async ({params}: IPageEdit) => {
-  const {taskId} = params;
-  const task: any = await getOneTask(taskId) 
+import TaskEditInputs from "@/app/_components/TaskEditInputs";
+import { getOneTask } from "@/app/lib/data/task.action";
+import { IPageEdit } from "@/app/typescript.type/interface";
 
-
-  console.log(task)
+const Page = async ({ params }: IPageEdit) => {
+  const { taskId } = params;
+  const task: any = await getOneTask(taskId)
 
   return (
-    <div>Edit Task Page</div>
+    <div>
+      <TaskEditInputs task={JSON.parse(JSON.stringify(task))} />
+    </div>
   )
 }
 
